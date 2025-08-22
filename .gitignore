@@ -1,0 +1,6 @@
+mailings/
+.env
+
+/venv
+
+/mailings
