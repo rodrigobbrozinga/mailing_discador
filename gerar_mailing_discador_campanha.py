@@ -171,7 +171,8 @@ def preencher_telefones(row):
 
 # Geração dos arquivos (um por CAMPANHA)
 data_atual = datetime.now().strftime('%Y-%m-%d')
-os.makedirs("mailings", exist_ok=True)
+base_dir = os.path.join("mailings", "campanhas")
+os.makedirs(base_dir, exist_ok=True)
 
 for campanha, grupo in df.groupby('CAMPANHA'):
     mailing = pd.DataFrame(columns=mailing_columns)
@@ -186,7 +187,7 @@ for campanha, grupo in df.groupby('CAMPANHA'):
 
     nome_arquivo = f"Mailing {campanha} - {data_atual}.csv"
     nome_arquivo = nome_arquivo.replace("/", "-").replace("\\", "-").replace(":", "-")
-    caminho_arquivo = os.path.join("mailings", nome_arquivo)
+    caminho_arquivo = os.path.join(base_dir, nome_arquivo)
     mailing.to_csv(caminho_arquivo, index=False, sep=';', encoding='utf-8-sig')
 
 print("Arquivos de mailing por campanha gerados com sucesso!")
