@@ -184,6 +184,9 @@ def preencher_telefones(row):
 
 # Exportar arquivos por campanha e negociador
 data_atual = datetime.now().strftime('%Y-%m-%d')
+base_dir = os.path.join("mailings", "negociadores")
+os.makedirs(base_dir, exist_ok=True)
+
 for (negociador, campanha), grupo in df.groupby(['NEGOCIADOR', 'CAMPANHA']):
     mailing = pd.DataFrame(columns=mailing_columns)
     mailing['COD'] = grupo['CPFCNPJ_CLIENTE']
@@ -196,9 +199,8 @@ for (negociador, campanha), grupo in df.groupby(['NEGOCIADOR', 'CAMPANHA']):
         mailing[f'TELEFONE_{i + 1}'] = telefones_expandidos.apply(lambda x: x[i])
     
     nome_arquivo = f"Mailing {campanha} - {negociador} - {data_atual}.csv"
-    nome_arquivo = nome_arquivo.replace("/", "-")
-    os.makedirs("mailings", exist_ok=True)
-    caminho_arquivo = os.path.join("mailings", nome_arquivo)
+    nome_arquivo = nome_arquivo.replace("/", "-").replace("\\", "-").replace(":", "-")
+    caminho_arquivo = os.path.join(base_dir, nome_arquivo)
     mailing.to_csv(caminho_arquivo, index=False, sep=';', encoding='utf-8-sig')
 
 print("Arquivos de mailing gerados com sucesso!")

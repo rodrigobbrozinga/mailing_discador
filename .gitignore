@@ -1,6 +1,7 @@
-mailings/
 .env
 
 /venv
 
-/mailings
+# Ignore generated mailing files
+mailings/**/*.csv
+
