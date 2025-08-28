@@ -81,6 +81,14 @@ WITH Inadimplentes AS (
         AND MoDataVencimento < GETDATE()
         AND MoOrigemMovimentacao IN ('C', 'I')
         AND MoCampanhasID NOT IN (12,16,20,35,38,42,44,47,48,49,64,65)
+        -- Exclui quem tiver alguma parcela de acordo aberta
+        AND NOT EXISTS (
+            SELECT 1
+            FROM Movimentacoes m2
+            WHERE m2.MoInadimplentesID     = Movimentacoes.MoInadimplentesID
+              AND m2.MoOrigemMovimentacao  = 'A'  -- Acordo
+              AND m2.MoStatusMovimentacao  = 0    -- Aberto
+        )
     GROUP BY 
         dbo.RetornaNomeCampanha(MoCampanhasID, 1),
         dbo.RetornaNomeRazaoSocial(MoClientesID),
