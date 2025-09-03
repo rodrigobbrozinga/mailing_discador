@@ -1,9 +1,11 @@
 """Exemplo básico de uso do cliente de autenticação 3C Plus."""
 
+from dotenv import load_dotenv
 from auth_3cplus import ThreeCAuthClient
 
 
 def main() -> None:
+    load_dotenv()
     client = ThreeCAuthClient()
     client.login()
     dados = client.verificar_sessao()
