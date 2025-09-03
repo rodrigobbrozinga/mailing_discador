@@ -1,9 +1,9 @@
+mypy
 pandas
 pyodbc
 python-dotenv
-requests
 pytest
-requests-mock
 pytest-cov
+requests
+requests-mock
 ruff
-mypy

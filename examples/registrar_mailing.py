@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from dotenv import load_dotenv
 from auth_3cplus import ThreeCAuthClient
 from mailing_3cplus import Contact, ThreeCMailingClient
 
 
 def main() -> None:
+    load_dotenv()
     auth = ThreeCAuthClient()
     auth.login()
 

@@ -20,11 +20,16 @@ pip install -r requirements.txt
 | `THREEC_COMPANY_DOMAIN`| Domínio da empresa                           |
 | `THREEC_BASE_URL`      | (opcional) URL base da API                   |
 
+As variáveis podem ser definidas em um arquivo `.env` na raiz do projeto e
+serão carregadas automaticamente pelo cliente.
+
 ## Exemplo de uso
 
 ```python
+from dotenv import load_dotenv
 from auth_3cplus import ThreeCAuthClient
 
+load_dotenv()
 client = ThreeCAuthClient()
 client.login()
 dados = client.verificar_sessao()
