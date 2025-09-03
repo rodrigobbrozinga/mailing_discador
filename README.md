@@ -32,6 +32,32 @@ print(dados.get("name"))
 client.logout()
 ```
 
+## Mailing e campanhas de discagem
+
+O módulo `mailing_3cplus.py` permite criar containers de mailing, enviar
+contatos e ajustar o peso de campanhas.
+
+```python
+from auth_3cplus import ThreeCAuthClient
+from mailing_3cplus import ThreeCMailingClient, Contact
+
+auth = ThreeCAuthClient()
+auth.login()
+
+mailing = ThreeCMailingClient(auth)
+campanhas = mailing.listar_campanhas()
+container = mailing.criar_mailing_container("Meu mailing", campanhas[0]["id"])
+
+contatos = [
+    Contact(name="João", phones=["5511999999999"], external_id="1").to_dict(),
+]
+mailing.enviar_mailing_json(container["mailing_id"], contatos)
+mailing.ajustar_peso_mailing(container["mailing_id"], 100)
+```
+
+Os endpoints utilizados podem variar entre ambientes. Utilize o parâmetro
+`endpoints` do cliente para sobrescrever ou acrescentar caminhos.
+
 ## Tabela de erros
 
 | Exceção              | Cenário                                                         |
